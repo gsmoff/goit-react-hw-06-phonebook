@@ -1,11 +1,13 @@
-import { ContactList } from "Pages/ContactList/ContactList";
-import { ContactForm } from "Pages/ContactForm/ContactForm";
+import { ContactList } from 'components/ContactList/ContactList';
+import { ContactForm } from 'components/ContactForm/ContactForm';
+
 
 export const App = () => {
-  return (
-    <>
-      <ContactForm/>
-        <ContactList/>
-    </>
-  );
+  
+    return (
+        <>
+            <ContactForm />
+            <ContactList />
+        </>
+    );
 };

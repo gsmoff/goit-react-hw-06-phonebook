@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contacts/contactsSlice';
-
+import { useSelector } from 'react-redux';
 
 export const ContactForm = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+
+    const contacts = useSelector(store => store.contacts);
 
     const handleCangeForm = event => {
         const { name, value } = event.target;
@@ -24,14 +26,28 @@ export const ContactForm = () => {
             name,
             phone,
         };
-        if (!name || !phone) {
-            alert('Some filed is empty');
-            return false;
-        }
+        const isValidateForm = validateForm();
+
+        if (!isValidateForm) return;
 
         dispatch(addContact(contact));
 
         resetForm();
+    };
+    const validateForm = () => {
+        if (!name || !phone) {
+            alert('Some filed is empty');
+            return false;
+        }
+        return onCheckUnique(name);
+    };
+
+    const onCheckUnique = name => {
+        const isExistContact = !!contacts.find(
+            contact => contact.name === name
+        );
+        isExistContact && alert('Contact is already exist');
+        return !isExistContact;
     };
 
     const resetForm = () => {
